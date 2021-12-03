@@ -3,7 +3,33 @@
 
 Below is my solutions for some of the challenges i've done.
 
+## Crypto : get_next_line
 
+You are given 2 files, main.c and file,
+inspecting main.c we can see that there are a lot of "empty" lines and then a typical main for a get_next_line function
+returning to the "empty area" of the main.c, selecting it shows that there ares some tabs in a very interesting sequence, we can from here expect that it is whitespace language, so let's try to translate it in dcode, indeed it give us the following
+
+```python
+from cryptography.fernet import Fernet 
+
+flag = b'gAAAAABholOrj0h6mj3SDVrwGYCJSv9kpqPaiofosX7Z-50ydhS5XXXymn2xBowgVnQxbP67zegqSFG9kB72eWbjnme6nTH5Zn3plnB7OwpkSBPUdf_r9ZKHKSfJakM1Gc4hP5nW-Jqr'
+```
+
+we have the flag but as we can see it is encrypted, but looking at the import statement *from cryptography.fernet import Fernet*, the flag is encrypted in fernet, in order to decrypt a fernet message we need a key, luckily the second file attached to challege is likely the key in this instance so let's write a script to decrypt our flag:
+
+```python
+def decrypt(msg):
+   
+    key = "5QEqi9e-guHYP_VclQ-8Jz0_CQPqXjDE8PynuU3qCpI="
+    f = Fernet(key)
+    decrypted_message = f.decrypt(msg) #decrypt msg
+
+    print(decrypted_message.decode())
+
+if __name__ == "__main__":
+    decrypt(b'gAAAAABholOrj0h6mj3SDVrwGYCJSv9kpqPaiofosX7Z-50ydhS5XXXymn2xBowgVnQxbP67zegqSFG9kB72eWbjnme6nTH5Zn3plnB7OwpkSBPUdf_r9ZKHKSfJakM1Gc4hP5nW-Jqr')
+```
+output => LORD_LAARBI{N0rm1nette_stRuggle_15_ReAL}
 
 
 ## Crypto : dekalog
